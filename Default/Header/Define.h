@@ -11,11 +11,11 @@
 
 #define		SAFE_DELETE(p)	if(p) { delete p; p = nullptr;}
 
-#define		TILECX			130
-#define		TILECY			68
+#define		TILECX			65
+#define		TILECY			33
 
-#define		TILEX			20
-#define		TILEY			30
+#define		TILEX			40
+#define		TILEY			60
 
 #define		MIN_STR			64
 #define		MAX_STR			256
