@@ -4,7 +4,7 @@
 IMPLEMENT_SINGLETON(CDevice)
 
 CDevice::CDevice()
-	: m_pSDK(nullptr), m_pDevice(nullptr), m_pSprite(nullptr)
+	: m_pSDK(nullptr), m_pDevice(nullptr), m_pSprite(nullptr), m_pFont(nullptr)
 {
 }
 
@@ -84,12 +84,29 @@ HRESULT CDevice::Initialize(void)
 		return E_FAIL;
 	}
 
+		D3DXFONT_DESCW			tFontInfo;
+	ZeroMemory(&tFontInfo, sizeof(D3DXFONT_DESCW));
+
+	tFontInfo.Height = 20;
+	tFontInfo.Width  = 10;
+	tFontInfo.Weight = FW_HEAVY;
+	tFontInfo.CharSet = HANGEUL_CHARSET;
+	lstrcpy(tFontInfo.FaceName, L"±Ã¼­");
+
+	if (FAILED(D3DXCreateFontIndirect(m_pDevice, &tFontInfo, &m_pFont)))
+	{
+		AfxMessageBox(L"Create Font Failed");
+		return E_FAIL;
+	}
 
 	return S_OK;
 }
 
 void CDevice::Release(void)
 {
+	if (nullptr != m_pFont)
+		m_pFont->Release();
+
 	if (nullptr != m_pSprite)
 		m_pSprite->Release();
 

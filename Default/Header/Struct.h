@@ -25,6 +25,15 @@ typedef struct tagTexture
 
 }TEXINFO;
 
+typedef struct tagTile
+{
+	D3DXVECTOR3	vPos;
+	D3DXVECTOR3 vSize;
+
+	BYTE		byOption;
+	BYTE		byDrawID;
+
+}TILE;
 
 
 

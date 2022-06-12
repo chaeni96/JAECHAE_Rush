@@ -40,6 +40,9 @@
     <Filter Include="04. Manager\00. TextureMgr\Texture\Multi">
       <UniqueIdentifier>{d0f3fcb0-9d05-423b-9366-048d307244f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05. Terrain">
+      <UniqueIdentifier>{02de0d53-fb15-447f-bef4-75b122ecb8da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -81,6 +84,9 @@
     <ClInclude Include="MultiTexture.h">
       <Filter>04. Manager\00. TextureMgr\Texture\Multi</Filter>
     </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>05. Terrain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tool.cpp">
@@ -112,6 +118,9 @@
     </ClCompile>
     <ClCompile Include="MultiTexture.cpp">
       <Filter>04. Manager\00. TextureMgr\Texture\Multi</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>05. Terrain</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

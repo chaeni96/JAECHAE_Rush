@@ -5,9 +5,10 @@
 #pragma once
 
 #include "Device.h"
-#include "SingleTexture.h"
+#include "Terrain.h"
 
-class CToolView : public CView
+class CToolDoc;
+class CToolView : public CScrollView
 {
 protected: // serialization에서만 만들어집니다.
 	CToolView();
@@ -37,9 +38,12 @@ public:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
+public:
+	CTerrain*			Get_Terrain(void) { return m_pTerrain; }
+	
 protected:
 	CDevice*			m_pDevice;
-	//CSingleTexture*		m_pSingle;
+	CTerrain*			m_pTerrain;
 
 // 생성된 메시지 맵 함수
 protected:
@@ -47,6 +51,7 @@ protected:
 public:
 	virtual void OnInitialUpdate();
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnDestroy();
 };
 
 #ifndef _DEBUG  // ToolView.cpp의 디버그 버전
