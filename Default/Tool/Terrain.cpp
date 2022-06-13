@@ -17,7 +17,14 @@ CTerrain::~CTerrain()
 
 void CTerrain::Initialize(void)
 {
-	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Terrain/Tile/Tile%d.png", TEX_MULTI, L"Terrain", L"Tile", 5)))
+	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Map/Map1.bmp", TEX_SINGLE, L"Map1")))
+	{
+		AfxMessageBox(L"Cube Image Insert failed");
+		return;
+	}
+
+
+	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Terrain/Tile/Tile%d.png", TEX_MULTI, L"Terrain", L"Tile", 4)))
 	{
 		AfxMessageBox(L"Tile Image Insert failed");
 		return;
@@ -58,6 +65,27 @@ void CTerrain::Render(void)
 
 	::GetClientRect(m_pMainView->m_hWnd, &rc);
 
+	D3DXMatrixIdentity(&matWorld);
+	D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
+	D3DXMatrixTranslation(&matTrans, 400.f, 300.f, 0.f);
+
+	matWorld = matScale *  matTrans;
+
+	CDevice::Get_Instance()->Get_Sprite()->SetTransform(&matWorld);
+
+	const TEXINFO*		pTexInfo = CTextureMgr::Get_Instance()->Get_Texture(L"Map1");
+
+	if (nullptr == pTexInfo)
+		return;
+
+
+	CDevice::Get_Instance()->Get_Sprite()->Draw(pTexInfo->pTexture,	// 그리고자 하는 텍스처
+		nullptr, // 출력할 이미지 영역에 대한 rect 포인터, null인 경우 이미지의 0, 0 기준으로 출력
+		&D3DXVECTOR3(400, 300, 0.f), // 출력할 이미지 중심 축에 대한 vec3 구조체 포인터, null인 경우 0, 0이 중심 좌표
+		nullptr, // 위치 좌표에 대한 vec3 구조체 포인터, null인 경우 스크린 상 0,0 좌표에 출력
+		D3DCOLOR_ARGB(255, 255, 255, 255)); //출력할 원본 이미지와 섞을 색상 값, 출력 시 섞은 색상이 반영, 0xffffffff를 넘겨주면 원본 색상 유지된 상태로 출력
+
+
 	float	fX = WINCX / float(rc.right - rc.left);
 	float	fY = WINCY / float(rc.bottom - rc.top);
 
@@ -66,17 +94,21 @@ void CTerrain::Render(void)
 		D3DXMatrixIdentity(&matWorld);
 		D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
 		D3DXMatrixTranslation(&matTrans, iter->vPos.x - m_pMainView->GetScrollPos(0),
-			iter->vPos.y - m_pMainView->GetScrollPos(1),
-			iter->vPos.z);
+										 iter->vPos.y - m_pMainView->GetScrollPos(1),
+										 iter->vPos.z);
 
 		matWorld = matScale *  matTrans;
 
-		//Set_Ratio(&matWorld, fX, fY);
+		Set_Ratio(&matWorld, fX, fY);
+
 
 		const TEXINFO*		pTexInfo = CTextureMgr::Get_Instance()->Get_Texture(L"Terrain", L"Tile", iter->byDrawID);
 
 		if (nullptr == pTexInfo)
 			return;
+
+		float		fX = pTexInfo->tImgInfo.Width / 2.f;
+		float		fY = pTexInfo->tImgInfo.Height / 2.f;
 
 		CDevice::Get_Instance()->Get_Sprite()->SetTransform(&matWorld);
 
@@ -98,6 +130,40 @@ void CTerrain::Render(void)
 		//++iIndex;
 	}
 
+}
+
+void CTerrain::Mini_Render(void)
+{
+	D3DXMATRIX		matWorld, matScale, matTrans;
+
+	for (auto& iter : m_vecTile)
+	{
+		D3DXMatrixIdentity(&matWorld);
+		D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
+		D3DXMatrixTranslation(&matTrans, iter->vPos.x,
+			iter->vPos.y,
+			iter->vPos.z);
+
+		matWorld = matScale *  matTrans;
+
+		Set_Ratio(&matWorld, 0.7f, 0.7f);
+
+		const TEXINFO*		pTexInfo = CTextureMgr::Get_Instance()->Get_Texture(L"Terrain", L"Tile", iter->byDrawID);
+
+		if (nullptr == pTexInfo)
+			return;
+
+		float		fX = pTexInfo->tImgInfo.Width / 2.f;
+		float		fY = pTexInfo->tImgInfo.Height / 2.f;
+
+		CDevice::Get_Instance()->Get_Sprite()->SetTransform(&matWorld);
+
+		CDevice::Get_Instance()->Get_Sprite()->Draw(pTexInfo->pTexture,
+			nullptr,
+			&D3DXVECTOR3(fX, fY, 0.f),
+			nullptr,
+			D3DCOLOR_ARGB(255, 255, 255, 255));
+	}
 }
 
 void CTerrain::Release(void)
