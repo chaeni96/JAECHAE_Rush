@@ -22,6 +22,7 @@
 #define IDC_BUTTON4                     1014
 #define IDC_PICTURE1                    1014
 #define IDC_PICTURE2                    1015
+#define IDC_EDIT5                       1015
 #define IDC_RADIO1                      1016
 #define IDC_RADIO2                      1017
 #define IDC_RADIO3                      1018
