@@ -65,11 +65,18 @@ void CTerrain::Render(void)
 
 	::GetClientRect(m_pMainView->m_hWnd, &rc);
 
+
+	float	fX = WINCX / float(rc.right - rc.left);
+	float	fY = WINCY / float(rc.bottom - rc.top);
+
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
-	D3DXMatrixTranslation(&matTrans, 400.f, 300.f, 0.f);
+	D3DXMatrixTranslation(&matTrans, 0.f, 0.f, 0.f);
 
 	matWorld = matScale *  matTrans;
+
+	Set_Ratio(&matWorld, fX, fY);
+
 
 	CDevice::Get_Instance()->Get_Sprite()->SetTransform(&matWorld);
 
@@ -81,13 +88,10 @@ void CTerrain::Render(void)
 
 	CDevice::Get_Instance()->Get_Sprite()->Draw(pTexInfo->pTexture,	// 그리고자 하는 텍스처
 		nullptr, // 출력할 이미지 영역에 대한 rect 포인터, null인 경우 이미지의 0, 0 기준으로 출력
-		&D3DXVECTOR3(400, 300, 0.f), // 출력할 이미지 중심 축에 대한 vec3 구조체 포인터, null인 경우 0, 0이 중심 좌표
+		&D3DXVECTOR3(fX, fY, 0.f), // 출력할 이미지 중심 축에 대한 vec3 구조체 포인터, null인 경우 0, 0이 중심 좌표
 		nullptr, // 위치 좌표에 대한 vec3 구조체 포인터, null인 경우 스크린 상 0,0 좌표에 출력
 		D3DCOLOR_ARGB(255, 255, 255, 255)); //출력할 원본 이미지와 섞을 색상 값, 출력 시 섞은 색상이 반영, 0xffffffff를 넘겨주면 원본 색상 유지된 상태로 출력
 
-
-	float	fX = WINCX / float(rc.right - rc.left);
-	float	fY = WINCY / float(rc.bottom - rc.top);
 
 	for (auto& iter : m_vecTile)
 	{
