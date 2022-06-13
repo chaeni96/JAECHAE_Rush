@@ -14,6 +14,7 @@
 #include "TextureMgr.h"
 #include "MainFrm.h"
 #include "MiniView.h"
+#include "MyForm.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -35,6 +36,7 @@ BEGIN_MESSAGE_MAP(CToolView, CView)
 
 	ON_WM_LBUTTONDOWN()
 	ON_WM_DESTROY()
+	ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
 
 // CToolView 생성/소멸
@@ -96,7 +98,6 @@ void CToolView::OnInitialUpdate()
 
 	pMainFrm->SetWindowPos(nullptr, 0, 0, int(WINCX + fRowFrm), int(WINCY + fColFrm), SWP_NOZORDER);
 
-
 	g_hWnd = m_hWnd;
 
 	if (FAILED(m_pDevice->Initialize()))
@@ -120,15 +121,11 @@ void CToolView::OnDraw(CDC* /*pDC*/)
 	if (!pDoc)
 		return;
 
-	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
-
 	m_pDevice->Render_Begin();
 
 	m_pTerrain->Render();
 
 	m_pDevice->Render_End();
-
-
 }
 
 #pragma region 불필요
@@ -187,26 +184,24 @@ CToolDoc* CToolView::GetDocument() const // 디버그되지 않은 버전은 인라인으로 지
 
 void CToolView::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-
-
-
 	CScrollView::OnLButtonDown(nFlags, point);
 
-	m_pTerrain->Tile_Change(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), 1);
+	CMainFrame* pMainFrm = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+	CMyForm* pMyForm = dynamic_cast<CMyForm*>(pMainFrm->m_SecondSplitter.GetPane(1, 0));
+	CMapTool* pMapTool = &(pMyForm->m_MapTool);
+
+	m_pTerrain->Tile_Change(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), pMapTool->m_iDrawID);
 
 	// Invalidate : 호출 시 윈도우에 WM_PAINT와 WM_ERASEBKGND 메세지를 발생시킴, 이때 OnDraw 함수를 다시 한 번 호출하게 된다.
 
 	/*매개 변수가 FALSE 일 때 : WM_PAINT만 발생
-	매개 변수가 TRUE 일 때 : WM_PAINT와 WM_ERASEBKGND 동시 발생
+	매개 변수가 TRUE 일 때 : WM_PAINT와 WM_ERASEBKGND 동시 발생b
 
 	WM_ERASEBKGND  : 배경을 지우는 메세지*/
 
 	Invalidate(FALSE);
 
-
-	CMainFrame*		pMainFrm = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
-	CMiniView*		pMiniView = dynamic_cast<CMiniView*>(pMainFrm->m_SecondSplitter.GetPane(0, 0));
+	CMiniView* pMiniView = dynamic_cast<CMiniView*>(pMainFrm->m_SecondSplitter.GetPane(0, 0));
 
 	pMiniView->Invalidate(FALSE);
 
@@ -217,9 +212,29 @@ void CToolView::OnDestroy()
 {
 	CScrollView::OnDestroy();
 
-
 	Safe_Delete<CTerrain*>(m_pTerrain);
 	CTextureMgr::Get_Instance()->Destroy_Instance();
 	m_pDevice->Destroy_Instance();
-	// TODO: 여기에 메시지 처리기 코드를 추가합니다.
+}
+
+
+void CToolView::OnMouseMove(UINT nFlags, CPoint point)
+{
+	CScrollView::OnMouseMove(nFlags, point);
+
+	if (GetAsyncKeyState(VK_LBUTTON))
+	{
+		CMainFrame* pMainFrm = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+		CMyForm* pMyForm = dynamic_cast<CMyForm*>(pMainFrm->m_SecondSplitter.GetPane(1, 0));
+		CMapTool* pMapTool = &(pMyForm->m_MapTool);
+
+		m_pTerrain->Tile_Change(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), pMapTool->m_iDrawID);
+		Invalidate(FALSE);
+
+
+		CMiniView* pMiniView = dynamic_cast<CMiniView*>(pMainFrm->m_SecondSplitter.GetPane(0, 0));
+
+		pMiniView->Invalidate(FALSE);
+
+	}
 }

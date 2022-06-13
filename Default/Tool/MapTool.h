@@ -26,13 +26,19 @@ public:
 	void		Horizontal_Scroll(void);
 
 public:
+	afx_msg void OnTileListBox();
+	afx_msg void OnDropFiles(HDROP hDropInfo);
+	afx_msg void OnSaveData();
+
+	virtual BOOL OnInitDialog();
+
+public:
 	CListBox m_TileListBox;
 	CStatic m_TilePicture;
 	CButton m_Radio[3];
 
-	map<CString, CImage*>		m_TilePngImg;
+	map<CString, CImage*> m_TilePngImg;
 
-	afx_msg void OnTileListBox();
-	afx_msg void OnDropFiles(HDROP hDropInfo);
-	virtual BOOL OnInitDialog();
+	int	m_iDrawID;
+
 };

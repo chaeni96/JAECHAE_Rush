@@ -56,35 +56,30 @@ void CTerrain::Update(void)
 void CTerrain::Render(void)
 {
 
-	D3DXMATRIX		matWorld, matScale, matTrans;
-
-	TCHAR		szBuf[MIN_STR] = L"";
-	int			iIndex = 0;
+	D3DXMATRIX	matWorld, matScale, matTrans;
 
 	RECT	rc{};
 
 	::GetClientRect(m_pMainView->m_hWnd, &rc);
 
-
-	float	fX = WINCX / float(rc.right - rc.left);
-	float	fY = WINCY / float(rc.bottom - rc.top);
+	float fX = WINCX / float(rc.right - rc.left);
+	float fY = WINCY / float(rc.bottom - rc.top);
 
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
-	D3DXMatrixTranslation(&matTrans, 0.f, 0.f, 0.f);
 
-	matWorld = matScale *  matTrans;
+	matWorld = matScale;
 
 	Set_Ratio(&matWorld, fX, fY);
-
 
 	CDevice::Get_Instance()->Get_Sprite()->SetTransform(&matWorld);
 
 	const TEXINFO*		pTexInfo = CTextureMgr::Get_Instance()->Get_Texture(L"Map1");
 
 	if (nullptr == pTexInfo)
+	{
 		return;
-
+	}
 
 	CDevice::Get_Instance()->Get_Sprite()->Draw(pTexInfo->pTexture,	// 그리고자 하는 텍스처
 		nullptr, // 출력할 이미지 영역에 대한 rect 포인터, null인 경우 이미지의 0, 0 기준으로 출력
@@ -105,7 +100,6 @@ void CTerrain::Render(void)
 
 		Set_Ratio(&matWorld, fX, fY);
 
-
 		const TEXINFO*		pTexInfo = CTextureMgr::Get_Instance()->Get_Texture(L"Terrain", L"Tile", iter->byDrawID);
 
 		if (nullptr == pTexInfo)
@@ -121,24 +115,12 @@ void CTerrain::Render(void)
 			&D3DXVECTOR3(fX, fY, 0.f),
 			nullptr,
 			D3DCOLOR_ARGB(255, 255, 255, 255));
-
-		//swprintf_s(szBuf, L"%d", iIndex);
-
-		//CDevice::Get_Instance()->Get_Font()->DrawTextW(CDevice::Get_Instance()->Get_Sprite(),
-		//	szBuf,
-		//	lstrlen(szBuf),
-		//	nullptr,
-		//	0,
-		//	D3DCOLOR_ARGB(63, 0, 0, 0));
-
-		//++iIndex;
 	}
-
 }
 
 void CTerrain::Mini_Render(void)
 {
-	D3DXMATRIX		matWorld, matScale, matTrans;
+	D3DXMATRIX	matWorld, matScale, matTrans;
 
 	for (auto& iter : m_vecTile)
 	{

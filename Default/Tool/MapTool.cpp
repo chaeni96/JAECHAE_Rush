@@ -7,18 +7,28 @@
 #include "afxdialogex.h"
 #include "FileInfo.h"
 #include "Include.h"
+#include "MainFrm.h"
+#include "ToolView.h"
+
 // CMapTool 대화 상자입니다.
 
 IMPLEMENT_DYNAMIC(CMapTool, CDialog)
 
 CMapTool::CMapTool(CWnd* pParent /*=NULL*/)
-	: CDialog(IDD_MAPTOOL, pParent)
+	: CDialog(IDD_MAPTOOL, pParent), m_iDrawID(0)
 {
 
 }
 
 CMapTool::~CMapTool()
 {
+	for_each(m_TilePngImg.begin(), m_TilePngImg.end(), [](auto& Pair)
+	{
+		Pair.second->Destroy();
+		Safe_Delete<CImage*>(Pair.second);
+	});
+
+	m_TilePngImg.clear();
 }
 
 void CMapTool::DoDataExchange(CDataExchange* pDX)
@@ -65,6 +75,7 @@ void CMapTool::Horizontal_Scroll(void)
 BEGIN_MESSAGE_MAP(CMapTool, CDialog)
 	ON_LBN_SELCHANGE(IDC_LIST2, &CMapTool::OnTileListBox)
 	ON_WM_DROPFILES()
+	ON_BN_CLICKED(IDC_BUTTON1, &CMapTool::OnSaveData)
 END_MESSAGE_MAP()
 
 
@@ -77,19 +88,34 @@ void CMapTool::OnTileListBox()
 
 	UpdateData(TRUE);
 
-	CString		strSelectName;
+	CString	strSelectName;
 
 	int iSelect = m_TileListBox.GetCurSel();
 
 	m_TileListBox.GetText(iSelect, strSelectName);
 
-	auto	iter = m_TilePngImg.find(strSelectName);
+	auto iter = m_TilePngImg.find(strSelectName);
 
 	if (iter == m_TilePngImg.end())
 		return;
 
 	m_TilePicture.SetBitmap(*(iter->second));
 
+	int i = 0;
+
+	for (; i < strSelectName.GetLength(); ++i)
+	{
+		// isdigit : 매개 변수로 넘겨받은 단일 문자가 숫자 형태의 문자인지 아니면 글자 형태의 문자인지 판별하는 함수
+		//		     만약, 숫자 형태의 문자라고 판명되면 0이 아닌 값을 반환한다.
+		if (0 != isdigit(strSelectName[i]))
+			break;
+	}
+
+	//Delete(index, count) : 인덱스 위치로부터 카운트만큼 문자를 삭제하는 함수
+	strSelectName.Delete(0, i);
+
+	// _tstoi : 문자를 정수형으로 변환하는 함수
+	m_iDrawID = _tstoi(strSelectName);
 
 	UpdateData(FALSE);
 }
@@ -97,14 +123,9 @@ void CMapTool::OnTileListBox()
 
 void CMapTool::OnDropFiles(HDROP hDropInfo)
 {
-	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-
-
-
 	UpdateData(TRUE);
 
 	CDialog::OnDropFiles(hDropInfo);
-
 
 	TCHAR		szFilePath[MAX_PATH] = L"";
 	TCHAR		szFileName[MAX_STR] = L"";
@@ -134,7 +155,7 @@ void CMapTool::OnDropFiles(HDROP hDropInfo)
 
 		if (iter == m_TilePngImg.end())
 		{
-			CImage*		pPngImg = new CImage;
+			CImage*	pPngImg = new CImage;
 
 			pPngImg->Load(strRelative);	// 해당 경로의 이미지 로드
 
@@ -153,9 +174,65 @@ BOOL CMapTool::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
-	// TODO:  여기에 추가 초기화 작업을 추가합니다.
 	m_Radio[0].SetCheck(TRUE);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
+}
+
+
+void CMapTool::OnSaveData()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CFileDialog		Dlg(FALSE,
+		L"dat",
+		L"*.dat",
+		OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,
+		L"Data Files(*.dat)|*.dat||",
+		this);
+
+	TCHAR	szPath[MAX_PATH] = L"";
+
+	// 현재 프로젝트 경로를 얻어오는 함수
+	GetCurrentDirectory(MAX_PATH, szPath);
+
+	// 전체 경로에서 파일 이름만 잘라주는 함수, 만약 경로 상에 파일명이 없다면 제일 마지막 폴더명을 잘라낸다.
+	PathRemoveFileSpec(szPath);
+
+	// data 폴더명을 잘라낸 경로에 합성
+	lstrcat(szPath, L"\\Data");
+
+	// 대화상자를 열었을 때 보이는 기본 경로로 설정
+	Dlg.m_ofn.lpstrInitialDir = szPath;
+
+	if (IDOK == Dlg.DoModal())
+	{
+		// GetPathName : 선택된 경로를 반환
+		CString	str = Dlg.GetPathName();
+
+		// GetString 원시 문자열로 변환하는 함수
+		const TCHAR* pGetPath = str.GetString();
+
+		HANDLE hFile = CreateFile(pGetPath, GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
+
+		if (INVALID_HANDLE_VALUE == hFile)
+			return;
+
+		CMainFrame*		pMainFrm = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+
+		CToolView*		pView = dynamic_cast<CToolView*>(pMainFrm->m_MainSplitter.GetPane(0, 1));
+
+		CTerrain*		pTerrain = pView->Get_Terrain();
+
+		vector<TILE*>& vecTile = pTerrain->Get_VecTile();
+
+		DWORD dwByte = 0;
+
+		for (auto& iter : vecTile)
+		{
+			WriteFile(hFile, iter, sizeof(TILE), &dwByte, nullptr);
+		}
+
+		CloseHandle(hFile);
+	}
 }
