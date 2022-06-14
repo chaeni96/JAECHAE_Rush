@@ -69,7 +69,7 @@ void CMyTerrain::Render(void)
 
 	CDevice::Get_Instance()->Get_Sprite()->SetTransform(&matWorld);
 
-	const TEXINFO*		pTexInfo = CTextureMgr::Get_Instance()->Get_Texture(L"Map1");
+	const TEXINFO*		pTexInfo = CTextureMgr::Get_Instance()->Get_Texture(L"Map2");
 
 	if (nullptr == pTexInfo)
 	{

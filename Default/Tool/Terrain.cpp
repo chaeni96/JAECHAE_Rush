@@ -17,7 +17,7 @@ CTerrain::~CTerrain()
 
 void CTerrain::Initialize(void)
 {
-	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Map/Map1.bmp", TEX_SINGLE, L"Map1")))
+	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Terrain/Map/Map2.png", TEX_SINGLE, L"Map2")))
 	{
 		AfxMessageBox(L"Cube Image Insert failed");
 		return;
@@ -43,6 +43,7 @@ void CTerrain::Initialize(void)
 			pTile->vSize = { (float)TILECX, (float)TILECY, 0.f };
 			pTile->byDrawID = 0;
 			pTile->byOption = 0;
+
 
 			m_vecTile.push_back(pTile);
 		}
@@ -74,7 +75,7 @@ void CTerrain::Render(void)
 
 	CDevice::Get_Instance()->Get_Sprite()->SetTransform(&matWorld);
 
-	const TEXINFO*		pTexInfo = CTextureMgr::Get_Instance()->Get_Texture(L"Map1");
+	const TEXINFO*		pTexInfo = CTextureMgr::Get_Instance()->Get_Texture(L"Map2");
 
 	if (nullptr == pTexInfo)
 	{
