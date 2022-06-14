@@ -324,8 +324,6 @@ BOOL CUnitTool::OnInitDialog()
 	m_ComboControl.AddString(_T("Spider"));
 	m_ComboControl.AddString(_T("Golem"));
 
-	m_ComboControl.SetCurSel(0);
-
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
