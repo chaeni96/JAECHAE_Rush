@@ -21,6 +21,13 @@ HRESULT CStage::Ready_Scene()
 		return E_FAIL;
 	}
 
+	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Terrain/Map/Map0.png", TEX_SINGLE, L"Map1")))
+	{
+		ERR_MSG(L"Cube Image Insert failed");
+		return E_FAIL;
+	}
+
+
 	CObj*	pObj = new CMyTerrain;
 
 	if (nullptr == pObj)
