@@ -83,8 +83,6 @@ void CMyTerrain::Render(void)
 		D3DCOLOR_ARGB(255, 255, 255, 255)); //출력할 원본 이미지와 섞을 색상 값, 출력 시 섞은 색상이 반영, 0xffffffff를 넘겨주면 원본 색상 유지된 상태로 출력
 
 
-
-
 	for(int i = iCullY; i < iCullY + iTileCntY; ++i)
 	{
 		for (int j = iCullX; j < iCullX + iTileCntX; ++j)
