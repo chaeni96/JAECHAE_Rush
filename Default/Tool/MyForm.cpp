@@ -28,6 +28,7 @@ void CMyForm::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CMyForm, CFormView)
 	ON_BN_CLICKED(IDC_BUTTON2, &CMyForm::OnMapTool)
 	ON_BN_CLICKED(IDC_BUTTON5, &CMyForm::OnUnitTool)
+	ON_BN_CLICKED(IDC_BUTTON6, &CMyForm::OnPathFind)
 END_MESSAGE_MAP()
 
 
@@ -80,4 +81,12 @@ void CMyForm::OnUnitTool()
 		m_UnitTool.Create(IDD_UNITTOOL);	// 해당 ID에 맞는 다이얼로그 생성
 
 	m_UnitTool.ShowWindow(SW_SHOW);		// 창 모양으로 출력
+}
+
+void CMyForm::OnPathFind()
+{
+	if (nullptr == m_PathFind.GetSafeHwnd())
+		m_PathFind.Create(IDD_PATHFIND);	// 해당 ID에 맞는 다이얼로그 생성
+
+	m_PathFind.ShowWindow(SW_SHOW);
 }

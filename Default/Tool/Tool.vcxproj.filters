@@ -43,20 +43,23 @@
     <Filter Include="05. Terrain">
       <UniqueIdentifier>{02de0d53-fb15-447f-bef4-75b122ecb8da}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. View\00.MyForm">
-      <UniqueIdentifier>{724f08ab-d8ed-4800-bc73-201d1653e6d6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. View\01. MiniView">
       <UniqueIdentifier>{1c9a1e75-33cc-4106-a9c3-91e9c16bd204}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. View\00.MyForm\00.UnitTool">
-      <UniqueIdentifier>{af0a9938-7292-4e59-abad-ed6d48f8de1f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. View\00.MyForm\01.MapTool">
-      <UniqueIdentifier>{42e691eb-6a45-4d68-8d65-83fe80eb2eb3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="06.FileInfo">
       <UniqueIdentifier>{435e2e4d-292b-4728-aa04-c4dbb5319a15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. View\00. MyForm">
+      <UniqueIdentifier>{724f08ab-d8ed-4800-bc73-201d1653e6d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. View\00. MyForm\00.UnitTool">
+      <UniqueIdentifier>{af0a9938-7292-4e59-abad-ed6d48f8de1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. View\00. MyForm\01.MapTool">
+      <UniqueIdentifier>{42e691eb-6a45-4d68-8d65-83fe80eb2eb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. View\00. MyForm\02. PathFind">
+      <UniqueIdentifier>{b25672c8-1f6e-44ba-a2ec-e16f9ab6175c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -103,19 +106,22 @@
       <Filter>05. Terrain</Filter>
     </ClInclude>
     <ClInclude Include="MyForm.h">
-      <Filter>01. View\00.MyForm</Filter>
+      <Filter>01. View\00. MyForm</Filter>
     </ClInclude>
     <ClInclude Include="MiniView.h">
       <Filter>01. View\01. MiniView</Filter>
     </ClInclude>
     <ClInclude Include="MapTool.h">
-      <Filter>01. View\00.MyForm\01.MapTool</Filter>
+      <Filter>01. View\00. MyForm\01.MapTool</Filter>
     </ClInclude>
     <ClInclude Include="UnitTool.h">
-      <Filter>01. View\00.MyForm\00.UnitTool</Filter>
+      <Filter>01. View\00. MyForm\00.UnitTool</Filter>
     </ClInclude>
     <ClInclude Include="FileInfo.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>06.FileInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="PathFind.h">
+      <Filter>01. View\00. MyForm\02. PathFind</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -153,19 +159,22 @@
       <Filter>05. Terrain</Filter>
     </ClCompile>
     <ClCompile Include="MyForm.cpp">
-      <Filter>01. View\00.MyForm</Filter>
+      <Filter>01. View\00. MyForm</Filter>
     </ClCompile>
     <ClCompile Include="MiniView.cpp">
       <Filter>01. View\01. MiniView</Filter>
     </ClCompile>
     <ClCompile Include="MapTool.cpp">
-      <Filter>01. View\00.MyForm\01.MapTool</Filter>
+      <Filter>01. View\00. MyForm\01.MapTool</Filter>
     </ClCompile>
     <ClCompile Include="UnitTool.cpp">
-      <Filter>01. View\00.MyForm\00.UnitTool</Filter>
+      <Filter>01. View\00. MyForm\00.UnitTool</Filter>
+    </ClCompile>
+    <ClCompile Include="PathFind.cpp">
+      <Filter>01. View\00. MyForm\02. PathFind</Filter>
     </ClCompile>
     <ClCompile Include="FileInfo.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>06.FileInfo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
