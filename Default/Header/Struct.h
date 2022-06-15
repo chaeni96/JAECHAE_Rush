@@ -56,44 +56,14 @@ typedef	struct tagUnitData
 
 }UNITDATA;
 
-/*
-typedef struct tagTile
-{
-	D3DXVECTOR3	vPos;
-	D3DXVECTOR3 vSize;
-
-	BYTE		byOption;
-	BYTE		byDrawID;
-
-	int			iIndex;
-	int			iParentIndex;
-
-}TILE;
-
-typedef	struct tagUnitData
-{
-#ifndef _AFX
-	wstring	strName;
-#else
-	CString	strName;
-#endif
-
-	int		iAttack;
-	int		iHp;
-	BYTE	byJobIndex;
-	BYTE	byItem;
-
-}UNITDATA;
-
 typedef struct tagTexturePath
 {
-	wstring		wstrObjKey		= L"";
-	wstring		wstrStateKey	= L"";
+	wstring		wstrObjKey = L"";
+	wstring		wstrStateKey = L"";
 	wstring		wstrPath = L"";
 	int			iCount = 0;
 
-}IMGPATH;*/
-
+}IMGPATH;
 
 static D3DXVECTOR3		Get_Mouse()
 {
@@ -104,3 +74,4 @@ static D3DXVECTOR3		Get_Mouse()
 
 	return D3DXVECTOR3((float)Pt.x, (float)Pt.y, 0.f);
 }
+
