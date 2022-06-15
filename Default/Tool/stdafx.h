@@ -60,6 +60,7 @@
 #include <map>
 #include <algorithm>
 #include <string>
+#include <afxdlgs.h>
 #include <fstream>
 
 using namespace std;

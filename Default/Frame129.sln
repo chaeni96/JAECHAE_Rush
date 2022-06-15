@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. Header", "02. Header", 
 		Header\Define.h = Header\Define.h
 		Header\Enum.h = Header\Enum.h
 		Header\Functor.h = Header\Functor.h
+		Data\ImgPath.txt = Data\ImgPath.txt
 		Header\Include.h = Header\Include.h
 		Header\Struct.h = Header\Struct.h
 	EndProjectSection

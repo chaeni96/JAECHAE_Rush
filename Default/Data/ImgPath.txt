@@ -1,0 +1,7 @@
+Player|Attack|10|..\Texture\Stage\Player\Attack\DarkSlayerA%d.png
+Player|Dead|9|..\Texture\Stage\Player\Dead\DarkSlayerB%d.png
+Player|Walk|7|..\Texture\Stage\Player\Walk\DarkSlayer%d.png
+Terrain|Map|3|..\Texture\Stage\Terrain\Map\Map%d.png
+Terrain|Tile|4|..\Texture\Stage\Terrain\Tile\Tile%d.png
+Stage|Thumbnail|5|..\Texture\Stage\Thumbnail\%d.png
+Stage|Tower|5|..\Texture\Stage\Tower\Tower%d.png

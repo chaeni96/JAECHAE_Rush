@@ -17,8 +17,11 @@ CMyTerrain::~CMyTerrain()
 
 HRESULT CMyTerrain::Initialize(void)
 {
-	if (FAILED(Load_Tile(L"../Data/Map1Tile.dat")))
+	if (FAILED(Load_Tile(L"../Data/Map.dat")))
 		return E_FAIL;
+
+	Ready_Adjacency();
+
 
 	return S_OK;
 }
@@ -158,4 +161,8 @@ HRESULT CMyTerrain::Load_Tile(const TCHAR* pFilePath)
 
 
 	return S_OK;
+}
+
+void CMyTerrain::Ready_Adjacency(void)
+{
 }

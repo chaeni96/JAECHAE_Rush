@@ -341,11 +341,11 @@ void CUnitTool::OnComboSelect()
 
 	HBITMAP		hBitMap[5] =
 	{
-		(HBITMAP)LoadImage(nullptr, L"../Texture/Stage/Monster/0.bmp", IMAGE_BITMAP, 80, 80, LR_LOADFROMFILE | LR_CREATEDIBSECTION),
-		(HBITMAP)LoadImage(nullptr, L"../Texture/Stage/Monster/1.bmp", IMAGE_BITMAP, 80, 80, LR_LOADFROMFILE | LR_CREATEDIBSECTION),
-		(HBITMAP)LoadImage(nullptr, L"../Texture/Stage/Monster/2.bmp", IMAGE_BITMAP, 80, 80, LR_LOADFROMFILE | LR_CREATEDIBSECTION),
-		(HBITMAP)LoadImage(nullptr, L"../Texture/Stage/Monster/3.bmp", IMAGE_BITMAP, 80, 80, LR_LOADFROMFILE | LR_CREATEDIBSECTION),
-		(HBITMAP)LoadImage(nullptr, L"../Texture/Stage/Monster/4.bmp", IMAGE_BITMAP, 80, 80, LR_LOADFROMFILE | LR_CREATEDIBSECTION)
+		(HBITMAP)LoadImage(nullptr, L"../Texture/Stage/Thumbnail/0.bmp", IMAGE_BITMAP, 80, 80, LR_LOADFROMFILE | LR_CREATEDIBSECTION),
+		(HBITMAP)LoadImage(nullptr, L"../Texture/Stage/Thumbnail/1.bmp", IMAGE_BITMAP, 80, 80, LR_LOADFROMFILE | LR_CREATEDIBSECTION),
+		(HBITMAP)LoadImage(nullptr, L"../Texture/Stage/Thumbnail/2.bmp", IMAGE_BITMAP, 80, 80, LR_LOADFROMFILE | LR_CREATEDIBSECTION),
+		(HBITMAP)LoadImage(nullptr, L"../Texture/Stage/Thumbnail/3.bmp", IMAGE_BITMAP, 80, 80, LR_LOADFROMFILE | LR_CREATEDIBSECTION),
+		(HBITMAP)LoadImage(nullptr, L"../Texture/Stage/Thumbnail/4.bmp", IMAGE_BITMAP, 80, 80, LR_LOADFROMFILE | LR_CREATEDIBSECTION)
 	};
 
 	m_Picture.SetBitmap(hBitMap[iIndex]);

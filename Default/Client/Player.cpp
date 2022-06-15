@@ -15,7 +15,7 @@ CPlayer::~CPlayer()
 HRESULT CPlayer::Initialize(void)
 {
 	m_tInfo.vPos	= { 100.f, 200.f, 0.f };
-	m_wstrObjKey	= L"Monster";
+	m_wstrObjKey	= L"Player";
 	m_wstrStateKey	= L"Walk";
 
 	m_tFrame = { 0.f, 7.f };
