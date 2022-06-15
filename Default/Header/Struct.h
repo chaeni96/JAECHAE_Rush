@@ -33,6 +33,8 @@ typedef struct tagTile
 	BYTE		byOption;
 	BYTE		byDrawID;
 
+	int			iIndex;
+	int			iParentIndex;
 }TILE;
 
 
@@ -53,6 +55,8 @@ typedef	struct tagUnitData
 
 	BYTE	byJobIndex;
 	BYTE	byItem;
+
+
 
 }UNITDATA;
 
@@ -104,3 +108,12 @@ static D3DXVECTOR3		Get_Mouse()
 
 	return D3DXVECTOR3((float)Pt.x, (float)Pt.y, 0.f);
 }
+
+typedef struct tagTexturePath
+{
+	wstring				wstrObjKey = L"";
+	wstring				wstrStateKey = L"";
+	wstring				wstrPath = L"";
+	int					iCount = 0;
+
+}IMGPATH;
