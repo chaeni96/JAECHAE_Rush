@@ -2,6 +2,8 @@
 #include "Player.h"
 #include "TextureMgr.h"
 #include "Device.h"
+#include "AStarMgr.h"
+#include "TimeMgr.h"
 
 CPlayer::CPlayer()
 {
@@ -14,7 +16,7 @@ CPlayer::~CPlayer()
 
 HRESULT CPlayer::Initialize(void)
 {
-	m_tInfo.vPos	= { 100.f, 200.f, 0.f };
+	m_tInfo.vPos	= { 360.f, 540.f, 0.f };
 	m_wstrObjKey	= L"Player";
 	m_wstrStateKey	= L"Walk";
 
@@ -41,6 +43,13 @@ int CPlayer::Update(void)
 void CPlayer::Late_Update(void)
 {
 	Move_Frame();
+
+	if (GetAsyncKeyState(VK_LBUTTON))
+	{
+		CAStarMgr::Get_Instance()->Astar_Start(m_tInfo.vPos, ::Get_Mouse() - CObj::m_vScroll);
+	}
+
+	Move_Route();
 }
 
 void CPlayer::Render(void)
@@ -65,4 +74,25 @@ void CPlayer::Render(void)
 void CPlayer::Release(void)
 {
 	
+}
+
+void CPlayer::Move_Route(void)
+{
+	list<TILE*>& BestList = CAStarMgr::Get_Instance()->Get_BestList();
+
+	if (!BestList.empty())
+	{
+		int	iIndex = BestList.front()->iIndex;
+
+		D3DXVECTOR3	vDir = BestList.front()->vPos - m_tInfo.vPos;
+
+		float fDistance = D3DXVec3Length(&vDir);
+		D3DXVec3Normalize(&vDir, &vDir);
+
+		m_tInfo.vPos += vDir * 300.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
+
+		// 타일에 가까워졌을 때 다음 길을 찾기 위해 맨 앞에 원소를 제거
+		if (3.f >= fDistance)
+			BestList.pop_front();
+	}
 }

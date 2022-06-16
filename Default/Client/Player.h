@@ -14,5 +14,9 @@ public:
 	virtual void Render(void) override;
 	virtual void Release(void) override;
 
+
+private:
+	void		Move_Route(void);
+
 };
 

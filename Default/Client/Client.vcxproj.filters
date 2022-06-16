@@ -61,6 +61,9 @@
     <Filter Include="02. Obj\01. Player">
       <UniqueIdentifier>{da15fc5c-54e7-4ffd-8b3d-c433067e2418}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Manager\05.AstarMgr">
+      <UniqueIdentifier>{4308909a-7753-4956-8c7f-882f1392057e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -120,6 +123,9 @@
     <ClInclude Include="Player.h">
       <Filter>02. Obj\01. Player</Filter>
     </ClInclude>
+    <ClInclude Include="AStarMgr.h">
+      <Filter>03. Manager\05.AstarMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -169,6 +175,9 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>02. Obj\01. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="AStarMgr.cpp">
+      <Filter>03. Manager\05.AstarMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

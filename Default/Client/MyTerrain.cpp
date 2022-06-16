@@ -165,4 +165,76 @@ HRESULT CMyTerrain::Load_Tile(const TCHAR* pFilePath)
 
 void CMyTerrain::Ready_Adjacency(void)
 {
+	m_vecAdjacency.resize(m_vecTile.size());
+
+	for (int i = 0; i < TILEY; ++i)
+	{
+		for (int j = 0; j < TILEX; ++j)
+		{
+			int	iIndex = i * TILEX + j;
+
+			// 좌상단
+
+			// 맨 윗줄이 아닌 경우 && 맨 왼쪽 줄이 아닌 경우
+			if ((0 != i) && (0 != iIndex % (TILEX * 2)))
+			{
+				// 홀수 줄인 경우
+				if ((0 != i % 2) && (!m_vecTile[iIndex - TILEX]->byOption))
+				{
+					m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex - TILEX]);
+				}
+				// 짝수 줄인경우
+				else if ((0 == i % 2) && (!m_vecTile[iIndex - (TILEX + 1)]->byOption))
+				{
+					m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex - (TILEX + 1)]);
+				}
+			}
+			// 우 상단
+
+			// 맨 윗줄이 아닌 경우 && 맨 오른쪽 줄이 아닌 경우
+			if ((0 != i) && ((TILEX * 2 - 1) != iIndex % (TILEX * 2)))
+			{
+				// 홀수 줄인 경우
+				if ((0 != i % 2) && (!m_vecTile[iIndex - (TILEX - 1)]->byOption))
+				{
+					m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex - (TILEX - 1)]);
+				}
+				// 짝수 줄인경우
+				else if ((0 == i % 2) && (!m_vecTile[iIndex - TILEX]->byOption))
+				{
+					m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex - TILEX]);
+				}
+			}
+
+			// 맨 아래 줄이 아닌 경우 && 맨 왼쪽 줄이 아닌 경우
+			if ((TILEY - 1 != i) && (0 != iIndex % (TILEX * 2)))
+			{
+				// 홀수 줄인 경우
+				if ((0 != i % 2) && (!m_vecTile[iIndex + TILEX]->byOption))
+				{
+					m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex + TILEX]);
+				}
+				// 짝수 줄인경우
+				else if ((0 == i % 2) && (!m_vecTile[iIndex + (TILEX - 1)]->byOption))
+				{
+					m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex + (TILEX - 1)]);
+				}
+			}
+
+			// 맨 아래줄이 아닌 경우 && 맨 오른쪽 줄이 아닌 경우
+			if ((TILEY - 1 != i) && ((TILEX * 2 - 1) != iIndex % (TILEX * 2)))
+			{
+				// 홀수 줄인 경우
+				if ((0 != i % 2) && (!m_vecTile[iIndex + (TILEX + 1)]->byOption))
+				{
+					m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex + (TILEX + 1)]);
+				}
+				// 짝수 줄인경우
+				else if ((0 == i % 2) && (!m_vecTile[iIndex + TILEX]->byOption))
+				{
+					m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex + TILEX]);
+				}
+			}
+		}
+	}
 }

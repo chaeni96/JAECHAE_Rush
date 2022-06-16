@@ -3,6 +3,7 @@
 #include "MapTool.h"
 #include "UnitTool.h"
 #include "PathFind.h"
+#include "ObjTool.h"
 
 // CMyForm Æû ºäÀÔ´Ï´Ù.
 
@@ -34,7 +35,9 @@ public:
 	CFont m_Font;
 	CMapTool m_MapTool;
 	CUnitTool m_UnitTool;
-	CPathFind	m_PathFind;
+	CPathFind m_PathFind;
+	CObjTool m_ObjTool;
+
 
 public:
 	virtual void OnInitialUpdate();
@@ -42,6 +45,7 @@ public:
 	afx_msg void OnUnitTool();
 	afx_msg void OnMapTool();
 	afx_msg void OnPathFind();
+	afx_msg void OnObjTool();
 };
 
 
